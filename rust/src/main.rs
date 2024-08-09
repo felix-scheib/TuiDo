@@ -7,16 +7,22 @@ mod todos;
 const PATH: &str = "./todos.csv";
 
 fn main() {
-    let _cli = cli::Args::parse();
+    let cli = cli::Args::parse();
 
-    let _ = ToDos::new(PATH);
+    let mut todos = ToDos::new(PATH);
 
-    /*
     match &cli.command {
-        cli::Commands::Add { content } => todo!(),
-        cli::Commands::Complete { number } => todo!(),
-        cli::Commands::Delete { number } => todo!(),
-        cli::Commands::List { all, complete } => todo!(),
+        cli::Commands::Add { content } => todos.add_todo(content),
+        cli::Commands::Complete { number } => todos.complete_todo(*number),
+        cli::Commands::Delete { number } => todos.delete_todo(*number),
+        cli::Commands::List { all, complete } => {
+            if *all {
+                todos.to_table(|_| true).printstd();
+            } else if *complete {
+                todos.to_table(|todo| todo.get_complete()).printstd();
+            } else {
+                todos.to_table(|todo| !todo.get_complete()).printstd();
+            }
+        }
     }
-    */
 }

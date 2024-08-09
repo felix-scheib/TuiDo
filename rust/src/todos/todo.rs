@@ -1,38 +1,52 @@
 use chrono::{DateTime, Local};
+use prettytable::{row, Row};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Deserialize, Serialize)]
 pub struct ToDo {
+    number: usize,
     content: String,
     complete: bool,
     data: DateTime<Local>,
 }
 
 impl ToDo {
-    pub fn new(content: String) -> Self {
+    pub fn new(number: usize, content: &String) -> Self {
         Self {
-            content,
+            number,
+            content: content.clone(),
             complete: false,
             data: chrono::Local::now(),
         }
     }
-}
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+    pub fn get_number(&self) -> usize {
+        self.number
+    }
 
-    #[test]
-    fn test_add() {
-        let mut target = Vec::new();
+    pub fn get_complete(&self) -> bool {
+        self.complete
+    }
 
-        {
-            let mut writer = csv::Writer::from_writer(&mut target);
+    pub fn complete(&mut self) {
+        self.complete = true
+    }
 
-            writer.serialize(ToDo::new("content".to_owned()));
-        }
-        let result: Vec<u8> = Vec::new();
-        assert_eq!(target, result);
+    pub fn titles() -> Row {
+        row!["Number", "Content", "Complete", "Date"]
+    }
+
+    pub fn row(&self) -> Row {
+        let complete = match self.complete {
+            true => emoji::symbols::other_symbol::CHECK_MARK,
+            false => emoji::symbols::other_symbol::CROSS_MARK,
+        };
+
+        row![
+            self.number,
+            self.content,
+            complete.glyph,
+            chrono_humanize::HumanTime::from(self.data)
+        ]
     }
 }
-
