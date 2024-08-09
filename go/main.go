@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"example.org/tuido/cmd"
+)
 
-func main()  {
-  fmt.Println("Hello from Go!")
+func main() {
+	cmd.Execute()
 }
