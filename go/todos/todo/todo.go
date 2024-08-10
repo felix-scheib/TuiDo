@@ -8,18 +8,18 @@ import (
 )
 
 type ToDo struct {
-	number   uint      `csv:"number"`
-	content  string    `csv:"content"`
-	complete bool      `csv:"complete"`
-	date     time.Time `csv:"date"`
+	Number   uint      `csv:"number"`
+	Content  string    `csv:"content"`
+	Complete bool      `csv:"complete"`
+	Date     time.Time `csv:"date"`
 }
 
 func New(number uint, content string) ToDo {
 	return ToDo{
-		number:   number,
-		content:  content,
-		complete: false,
-		//date:     time.Now(),
+		Number:   number,
+		Content:  content,
+		Complete: false,
+		Date:     time.Now(),
 	}
 }
 
@@ -34,16 +34,16 @@ func Titles() table.Row {
 
 func (todo *ToDo) Row() table.Row {
 	var complete string
-	if todo.complete {
+	if todo.Complete {
 		complete = "\u2714"
 	} else {
 		complete = "\u274C"
 	}
 
 	return table.Row{
-		todo.number,
-		todo.content,
+		todo.Number,
+		todo.Content,
 		complete,
-		timediff.TimeDiff(todo.date),
+		timediff.TimeDiff(todo.Date),
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"example.org/tuido/todos/todo"
+	"github.com/gocarina/gocsv"
 )
 
 type todos struct {
@@ -62,13 +63,11 @@ func (tds *todos) Write() {
 		panic(fmt.Sprintf("Error while opening File: %s", err))
 	}
 
-	/*
-		err = gocsv.MarshalFile(&todos, file)
+	err = gocsv.MarshalFile(&todos, file)
 
-		if err != nil {
-			panic(fmt.Sprintf("Error while writing File: %s", err))
-		}
-	*/
+	if err != nil {
+		panic(fmt.Sprintf("Error while writing File: %s", err))
+	}
 
 	fmt.Println(len(todos))
 }
