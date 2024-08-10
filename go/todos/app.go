@@ -32,6 +32,9 @@ func List(all bool, complete bool) {
 
 	fmt.Print("\n")
 
+	todos := new("./todos.csv")
+	defer todos.Write()
+
 	t := table.NewWriter()
 	t.AppendHeader(todo.Titles())
 

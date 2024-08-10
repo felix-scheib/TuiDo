@@ -7,7 +7,7 @@ pub struct ToDo {
     number: usize,
     content: String,
     complete: bool,
-    data: DateTime<Local>,
+    date: DateTime<Local>,
 }
 
 impl ToDo {
@@ -16,7 +16,7 @@ impl ToDo {
             number,
             content: content.clone(),
             complete: false,
-            data: chrono::Local::now(),
+            date: chrono::Local::now(),
         }
     }
 

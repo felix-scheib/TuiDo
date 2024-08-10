@@ -11,6 +11,7 @@ A simple CLI ToDo application written in Go and Rust.
 | | Library |
 |- | - |
 | CLI | [Cobra](https://cobra.dev/) |
+| CSV | [GoCSV](https://github.com/gocarina/gocsv) |
 | tables | [go-pretty](https://github.com/jedib0t/go-pretty) |
 | time formatting | [timediff](https://github.com/mergestat/timediff) |
 

@@ -8,10 +8,10 @@ import (
 )
 
 type ToDo struct {
-	number   uint
-	content  string
-	complete bool
-	date     time.Time
+	number   uint      `csv:"number"`
+	content  string    `csv:"content"`
+	complete bool      `csv:"complete"`
+	date     time.Time `csv:"date"`
 }
 
 func New(number uint, content string) ToDo {
@@ -19,7 +19,7 @@ func New(number uint, content string) ToDo {
 		number:   number,
 		content:  content,
 		complete: false,
-		date:     time.Now(),
+		//date:     time.Now(),
 	}
 }
 
