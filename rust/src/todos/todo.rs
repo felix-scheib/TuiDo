@@ -38,14 +38,15 @@ impl ToDo {
 
     pub fn row(&self) -> Row {
         let complete = match self.complete {
-            true => emoji::symbols::other_symbol::CHECK_MARK,
-            false => emoji::symbols::other_symbol::CROSS_MARK,
+            true => "\u{2714}",
+            false => "\u{274C}",
         };
+
 
         row![
             self.number,
             self.content,
-            complete.glyph,
+            complete,
             chrono_humanize::HumanTime::from(self.data)
         ]
     }
