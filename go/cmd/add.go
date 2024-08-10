@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"example.org/tuido/todos"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +14,6 @@ var add = &cobra.Command{
 	Short: "Add a ToDo",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add " + args[0])
+		todos.Add(args[0])
 	},
 }

@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"strconv"
 
+	"example.org/tuido/todos"
 	"github.com/spf13/cobra"
 )
 
@@ -16,11 +16,10 @@ var complete = &cobra.Command{
 	Short: "Complete a ToDo",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		_, err := strconv.Atoi(args[0])
+		number, err := strconv.Atoi(args[0])
 
-		if err != nil {
-			return
+		if err == nil {
+			todos.Complete(uint(number))
 		}
-		fmt.Println("complete " + args[0])
 	},
 }

@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"example.org/tuido/todos"
 	"github.com/spf13/cobra"
 )
 
@@ -19,16 +18,6 @@ var list = &cobra.Command{
 	Use:   "list",
 	Short: "List all ToDos",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Print("list")
-
-		if All {
-			print(" all")
-		}
-
-		if Complete {
-			print(" complete")
-		}
-
-		println("")
+		todos.List(All, Complete)
 	},
 }
