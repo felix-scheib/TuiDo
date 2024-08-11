@@ -1,46 +1,30 @@
 package todos
 
-import (
-	"fmt"
-
-	"example.org/tuido/todos/todo"
-	"github.com/jedib0t/go-pretty/v6/table"
-)
+const PATH string = "./todos.csv"
 
 func Add(content string) {
-	fmt.Printf("add %s\n", content)
+	todos := new(PATH)
+	defer todos.write()
+
+	todos.add(content)
 }
 
 func Complete(number uint) {
-	fmt.Printf("complete %d\n", number)
+	todos := new(PATH)
+	defer todos.write()
+
+	todos.complete(number)
 }
 
 func Delete(number uint) {
-	fmt.Printf("delete %d\n", number)
+	todos := new(PATH)
+	defer todos.write()
+
+	todos.delete(number)
 }
 
 func List(all bool, complete bool) {
-	fmt.Print("list")
+	todos := new(PATH)
 
-	if all {
-		fmt.Print(" all")
-	}
-
-	if complete {
-		fmt.Print(" complete")
-	}
-
-	fmt.Print("\n")
-
-	todos := new("./todos.csv")
-	defer todos.Write()
-
-	t := table.NewWriter()
-	t.AppendHeader(todo.Titles())
-
-	td := todo.New(1, "My ToDo")
-	t.AppendRow(td.Row())
-
-	fmt.Print(t.Render())
-
+	todos.list(all, complete)
 }
