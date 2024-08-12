@@ -16,9 +16,7 @@ var complete = &cobra.Command{
 	Short: "Complete a ToDo",
 	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		number, err := strconv.Atoi(args[0])
-
-		if err == nil {
+		if number, err := strconv.Atoi(args[0]); err == nil {
 			todos.Complete(uint(number))
 		}
 	},

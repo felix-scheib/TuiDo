@@ -34,9 +34,11 @@ func Titles() table.Row {
 
 func (todo *ToDo) Row() table.Row {
 	var complete string
-	if todo.Complete {
+
+	switch todo.Complete {
+	case true:
 		complete = "\u2714"
-	} else {
+	case false:
 		complete = "\u274C"
 	}
 

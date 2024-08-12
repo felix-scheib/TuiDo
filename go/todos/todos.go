@@ -27,19 +27,27 @@ func new(path string) todos {
 
 func loadFromFile(path string) ([]*todo.ToDo, uint) {
 	file, err := os.Open(path)
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			fmt.Println("Error closing file: ", err)
+		}
+	}()
 
 	if err == nil {
 		return fromCsv(file)
 	} else {
-		fmt.Printf("Error while reading File: %s\n", err)
-		fmt.Printf("Creating new File:  %s\n", path)
+		fmt.Println("Error while reading File: ", err)
+		fmt.Println("Creating new File:  ", path)
 
 		file, err := os.Create(path)
-		defer file.Close()
+		defer func() {
+			if err := file.Close(); err != nil {
+				fmt.Println("Error closing file: ", err)
+			}
+		}()
 
 		if err != nil {
-			panic(fmt.Sprintf("Error while creating File: %s", err))
+			panic(fmt.Sprintln("Error while creating File: ", err))
 		}
 
 		return make([]*todo.ToDo, 0), 1
@@ -51,7 +59,6 @@ func fromCsv(file *os.File) ([]*todo.ToDo, uint) {
 	var todos []*todo.ToDo
 
 	if err := gocsv.UnmarshalFile(file, &todos); err != nil {
-		fmt.Printf("Error while parsing ToDos: %s\n", err)
 		return todos, 1
 	}
 
@@ -69,16 +76,18 @@ func fromCsv(file *os.File) ([]*todo.ToDo, uint) {
 
 func (tds *todos) write() {
 	file, err := os.OpenFile(tds.path, os.O_WRONLY|os.O_TRUNC|os.O_CREATE, os.ModePerm)
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			fmt.Println("Error closing file: ", err)
+		}
+	}()
 
 	if err != nil {
-		panic(fmt.Sprintf("Error while opening File: %s", err))
+		panic(fmt.Sprintln("Error while opening File: ", err))
 	}
 
-	err = gocsv.MarshalFile(&tds.todos, file)
-
-	if err != nil {
-		panic(fmt.Sprintf("Error while writing File: %s", err))
+	if err = gocsv.MarshalFile(&tds.todos, file); err != nil {
+		panic(fmt.Sprintln("Error while writing File: ", err))
 	}
 }
 
